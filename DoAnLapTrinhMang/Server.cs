@@ -35,7 +35,7 @@ namespace DoAnLapTrinhMang
 
         private void ListenForRequests()
         {
-            try
+            while (true)
             {
                 // Chấp nhận kết nối từ ứng dụng B
                 client = server.AcceptTcpClient();
@@ -44,7 +44,10 @@ namespace DoAnLapTrinhMang
                 {
                     if (listBox1.InvokeRequired)
                     {
-                        listBox1.Invoke(new Action<string>(AddItemToListBox), "Connected!!!!");
+                        Invoke(new Action(() =>
+                        {
+                            listBox1.Items.Add("Connected!!!!");
+                        }));
                     }
                     else
                     {
@@ -74,7 +77,17 @@ namespace DoAnLapTrinhMang
                     // Hiển thị lên listBox1
                     if (listBox1.InvokeRequired)
                     {
-                        listBox1.Invoke(new Action<string>(AddItemToListBox), englishWord + " is " + vietnameseMeaning);
+                        if (listBox1.InvokeRequired)
+                        {
+                            Invoke(new Action(() =>
+                            {
+                                listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
+                            }));
+                        }
+                        else
+                        {
+                            listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
+                        }
                     }
                     else
                     {
@@ -85,23 +98,10 @@ namespace DoAnLapTrinhMang
                 {
                     MessageBox.Show("Connect fail");
                 }
+
+                //client.Close();
             }
-            catch (SocketException ex)
-            {
-                MessageBox.Show("SocketException: " + ex.Message);
-            }
-            catch (ObjectDisposedException ex)
-            {
-                MessageBox.Show("ObjectDisposedException: " + ex.Message);
-            }
-            finally
-            {
-                // Đóng kết nối với ứng dụng B
-                if (client != null)
-                {
-                    client.Close();
-                }
-            }
+            //server.Stop();
         }
     }
 }
