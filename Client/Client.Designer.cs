@@ -47,7 +47,7 @@
             this.textBox_Word.Name = "textBox_Word";
             this.textBox_Word.Size = new System.Drawing.Size(279, 37);
             this.textBox_Word.TabIndex = 17;
-            this.textBox_Word.Text = "Heelo";
+            this.textBox_Word.Text = "Hello";
             // 
             // button2
             // 
@@ -151,7 +151,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Client";
-            this.Text = "Form1";
+            this.Text = "Client";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

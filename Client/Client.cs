@@ -11,15 +11,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Client
 {
     public partial class Client : Form
     {
-        TcpClient client;
-        Thread Th_Connect;
-        Thread Th_SendData;
-        Thread Th_ReceiveData;
+        UdpClient client;
+        IPEndPoint endPoint;
 
         public Client()
         {
@@ -28,46 +27,50 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (client != null & client.Connected)
+            if (client != null && client.Client.Connected)
             {
-
-                // Nhập chuỗi tiếng Anh từ bàn phím
+                // Lấy nội dung tin nhắn từ textBox_Word
                 string englishWord = textBox_Word.Text.Trim();
 
-                // Gửi chuỗi tiếng Anh đến ứng dụng A
-                byte[] buffer = Encoding.UTF8.GetBytes(englishWord);
-                client.GetStream().Write(buffer, 0, buffer.Length);
+                // Gửi nội dung tin nhắn đến ứng dụng A
+                byte[] sendBytes = Encoding.UTF8.GetBytes(englishWord);
+                client.Send(sendBytes, sendBytes.Length);
 
-                // Đọc kết quả trả về từ ứng dụng A
-                byte[] responseBuffer = new byte[client.ReceiveBufferSize];
-                int bytesRead = client.GetStream().Read(responseBuffer, 0, client.ReceiveBufferSize);
-                string vietnameseMeaning = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
-                // Hiển thị kết quả trả về lên màn hình
-                listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
+                // Nhận kết quả trả về từ ứng dụng A
+                byte[] receiveBytes = client.Receive(ref endPoint);
+                string vietnameseMeaning = Encoding.UTF8.GetString(receiveBytes);
+
+                // Hiển thị kết quả trả về lên listBox1
+                if (englishWord == "Hello")
+                {
+                    listBox1.Items.Add($"{englishWord}");
+                }
+                else
+                {
+                    listBox1.Items.Add($"{englishWord} is {vietnameseMeaning}");
+                }
             }
             else
             {
-                MessageBox.Show("Do not Send!!!!!!!!!");
+                MessageBox.Show("Please connect to server first...");
             }
-            //client.Close();
         }
 
         private void button_connect_Click(object sender, EventArgs e)
         {
-            client = new TcpClient();
+            client = new UdpClient();
+            endPoint = new IPEndPoint(IPAddress.Parse(textBox_ip.Text), int.Parse(textBox_port.Text));
+            listBox1.Items.Clear();
 
-            try {
-                client.Connect(textBox_ip.Text, int.Parse(textBox_port.Text));
-                listBox1.Items.Add("Starting.....");
-                if (client.Connected)
-                {
-                    listBox1.Items.Add("Connected!!!!");
-                }
+            try
+            {
+                client.Connect(endPoint);
+                listBox1.Items.Add("Connected to server...");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            } 
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

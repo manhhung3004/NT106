@@ -11,8 +11,8 @@ namespace DoAnLapTrinhMang
     public partial class Server : Form
     {
 
-        private TcpListener server;
-        private TcpClient client;
+        private UdpClient server;
+        private IPEndPoint endPoint;
         private readonly Dictionary<string, string> dictionary = new Dictionary<string, string>()
         {
             { "Computer", "Máy tính" },
@@ -27,9 +27,10 @@ namespace DoAnLapTrinhMang
 
         private void button1_Click(object sender, EventArgs e)
         {
-            server = new TcpListener(IPAddress.Any, int.Parse(textBox_port.Text));
-            server.Start();
-            listBox1.Items.Add("Server start listen......");
+            server = new UdpClient(int.Parse(textBox_port.Text));
+            endPoint = new IPEndPoint(IPAddress.Any, int.Parse(textBox_port.Text));
+            listBox1.Items.Clear();
+            listBox1.Items.Add("Server started...");
             Task.Factory.StartNew(() => ListenForRequests());
         }
 
@@ -37,71 +38,47 @@ namespace DoAnLapTrinhMang
         {
             while (true)
             {
-                // Chấp nhận kết nối từ ứng dụng B
-                client = server.AcceptTcpClient();
+                // Nhận dữ liệu từ ứng dụng B
+                byte[] receiveBytes = server.Receive(ref endPoint);
+                string englishWord = Encoding.UTF8.GetString(receiveBytes);
 
-                if (client != null && client.Connected)
+                // Tìm kiếm nghĩa tiếng Việt tương ứng trong từ điển
+                string vietnameseMeaning = "";                
+                if (dictionary.ContainsKey(englishWord))
                 {
-                    if (listBox1.InvokeRequired)
-                    {
-                        Invoke(new Action(() =>
-                        {
-                            listBox1.Items.Add("Connected!!!!");
-                        }));
-                    }
-                    else
-                    {
-                        listBox1.Items.Add("Connected!!!!");
-                    }
-
-                    // Đọc chuỗi tiếng Anh từ ứng dụng B
-                    byte[] buffer = new byte[client.ReceiveBufferSize];
-                    int bytesRead = client.GetStream().Read(buffer, 0, client.ReceiveBufferSize);
-                    string englishWord = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-                    // Tìm kiếm nghĩa tiếng Việt tương ứng trongtừ điển
-                    string vietnameseMeaning = "";
-                    if (dictionary.ContainsKey(englishWord))
-                    {
-                        vietnameseMeaning = dictionary[englishWord];
-                    }
-                    else
-                    {
-                        vietnameseMeaning = "Not Found";
-                    }
-
-                    // Gửi trả lại nghĩa tiếng Việt tương ứng cho ứng dụng B
-                    byte[] responseBuffer = Encoding.UTF8.GetBytes(vietnameseMeaning);
-                    client.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
-
-                    // Hiển thị lên listBox1
-                    if (listBox1.InvokeRequired)
-                    {
-                        if (listBox1.InvokeRequired)
-                        {
-                            Invoke(new Action(() =>
-                            {
-                                listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
-                            }));
-                        }
-                        else
-                        {
-                            listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
-                        }
-                    }
-                    else
-                    {
-                        listBox1.Items.Add(englishWord + " is " + vietnameseMeaning);
-                    }
+                    vietnameseMeaning = dictionary[englishWord];
                 }
                 else
                 {
-                    MessageBox.Show("Connect fail");
+                    vietnameseMeaning = "Not Found";
                 }
 
-                //client.Close();
+                // Gửi trả lại nghĩa tiếng Việt tương ứng cho ứng dụng B
+                byte[] sendBytes = Encoding.UTF8.GetBytes(vietnameseMeaning);
+                server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                // Hiển thị kết quả trả về lên listBox1
+                if (englishWord == "Hello")
+                {
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add($"{englishWord}");
+                    }));
+                }
+                else
+                {
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add($"{englishWord} is {vietnameseMeaning}");
+                    }));
+
+                }
             }
-            //server.Stop();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

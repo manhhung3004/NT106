@@ -77,6 +77,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -130,7 +131,7 @@
             this.Controls.Add(this.textBox_port);
             this.Controls.Add(this.textBox_ip);
             this.Name = "Server";
-            this.Text = "Form1";
+            this.Text = "Server ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
