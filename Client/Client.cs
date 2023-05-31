@@ -25,51 +25,46 @@ namespace Client
             InitializeComponent();
         }
 
+        public string englishWord;
+        public string vietnameseMeaning;
+
         private void button1_Click(object sender, EventArgs e)
         {
+            client = new UdpClient();
+            endPoint = new IPEndPoint(IPAddress.Parse(textBox1.Text),int.Parse(textBox2.Text));
+            try
+            {
+                client.Connect(endPoint);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
             if (client != null && client.Client.Connected)
             {
                 // Lấy nội dung tin nhắn từ textBox_Word
-                string englishWord = textBox_Word.Text.Trim();
+                englishWord = textBox_Word.Text.Trim();
 
                 // Gửi nội dung tin nhắn đến ứng dụng A
                 byte[] sendBytes = Encoding.UTF8.GetBytes(englishWord);
                 client.Send(sendBytes, sendBytes.Length);
 
-                // Nhận kết quả trả về từ ứng dụng A
+                // Nhận kết quả trả về từ ứng dụng A5
                 byte[] receiveBytes = client.Receive(ref endPoint);
-                string vietnameseMeaning = Encoding.UTF8.GetString(receiveBytes);
+                vietnameseMeaning = Encoding.UTF8.GetString(receiveBytes);
 
-                // Hiển thị kết quả trả về lên listBox1
-                if (englishWord == "Hello")
+                Form_Translation form_Translation = new Form_Translation()
                 {
-                    listBox1.Items.Add($"{englishWord}");
-                }
-                else
-                {
-                    listBox1.Items.Add($"{englishWord} is {vietnameseMeaning}");
-                }
+                    EnglishWord = englishWord,
+                    VietnameseMeaning = vietnameseMeaning
+                };
+                form_Translation.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Please connect to server first...");
-            }
-        }
-
-        private void button_connect_Click(object sender, EventArgs e)
-        {
-            client = new UdpClient();
-            endPoint = new IPEndPoint(IPAddress.Parse(textBox_ip.Text), int.Parse(textBox_port.Text));
-            listBox1.Items.Clear();
-
-            try
-            {
-                client.Connect(endPoint);
-                listBox1.Items.Add("Connected to server...");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
 

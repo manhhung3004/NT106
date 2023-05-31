@@ -15,23 +15,24 @@ namespace DoAnLapTrinhMang
         private IPEndPoint endPoint;
         private readonly Dictionary<string, string> dictionary = new Dictionary<string, string>()
         {
-            { "Computer", "Máy tính" },
-            { "RAM", "Bộ nhớ trong" },
-            { "HDD", "Ổ đĩa cứng" }
+            { "Computer", "(Máy tính) <Máy tính là một thiết bị điện toán có khả năng nhận, lưu trữ và xử lý thông tin một cách hữu ích. Một máy tính được lập trình để thực hiện các hoạt động logic hoặc số học tự động>"},
+            { "RAM", "(Bộ nhớ trong) <RAM (Random Access Memory) là một loại bộ nhớ khả biến cho phép đọc - ghi ngẫu nhiên dữ liệu đến bất kỳ vị trí nào trong bộ nhớ dựa theo địa chỉ của bộ nhớ. Tất cả mọi thông tin lưu trên RAM chỉ là tạm thời và chúng sẽ mất đi khi không còn nguồn điện cung cấp.>" },
+            { "HDD", "(Ổ đĩa cứng) <là ổ cứng truyền thống, nguyên lý hoạt động cơ bản là có một đĩa tròn làm bằng nhôm (hoặc thủy tinh, hoặc gốm) được phủ vật liệu từ tính. Giữa ổ đĩa có một động cơ quay để đọc/ghi dữ liệu, kết hợp với những thiết bị này là những bo mạch điện tử nhằm điều khiển đầu đọc/ghi đúng vào vị trí của cái đĩa từ lúc nãy khi đang quay để giải mã thông tin>" }
         };
 
         public Server()
         {
             InitializeComponent();
+            button2.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            server = new UdpClient(int.Parse(textBox_port.Text));
-            endPoint = new IPEndPoint(IPAddress.Any, int.Parse(textBox_port.Text));
-            listBox1.Items.Clear();
-            listBox1.Items.Add("Server started...");
+            server = new UdpClient(8088);
+            endPoint = new IPEndPoint(IPAddress.Any, 8088);
             Task.Factory.StartNew(() => ListenForRequests());
+            button1.Hide();
+            button2.Show();
         }
 
         private void ListenForRequests()
@@ -56,23 +57,6 @@ namespace DoAnLapTrinhMang
                 // Gửi trả lại nghĩa tiếng Việt tương ứng cho ứng dụng B
                 byte[] sendBytes = Encoding.UTF8.GetBytes(vietnameseMeaning);
                 server.Send(sendBytes, sendBytes.Length, endPoint);
-
-                // Hiển thị kết quả trả về lên listBox1
-                if (englishWord == "Hello")
-                {
-                    Invoke(new Action(() =>
-                    {
-                        listBox1.Items.Add($"{englishWord}");
-                    }));
-                }
-                else
-                {
-                    Invoke(new Action(() =>
-                    {
-                        listBox1.Items.Add($"{englishWord} is {vietnameseMeaning}");
-                    }));
-
-                }
             }
         }
 
@@ -80,5 +64,6 @@ namespace DoAnLapTrinhMang
         {
             this.Close();
         }
+       
     }
 }
