@@ -10,7 +10,7 @@ namespace DoAnLapTrinhMang
 {
     public partial class Server : Form
     {
-
+        private bool _connected = true;
         private UdpClient server;
         private IPEndPoint endPoint;
         private readonly Dictionary<string, string> dictionary = new Dictionary<string, string>()
@@ -37,7 +37,7 @@ namespace DoAnLapTrinhMang
 
         private void ListenForRequests()
         {
-            while (true)
+            while (_connected)
             {
                 // Nhận dữ liệu từ ứng dụng B
                 byte[] receiveBytes = server.Receive(ref endPoint);
@@ -62,8 +62,15 @@ namespace DoAnLapTrinhMang
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            _connected = false;
+            server.Close();
+            button1.Show();
+            button2.Hide();
         }
-       
+
+        private void Server_Load(object sender, EventArgs e)
+        {
+            button1.Focus();
+        }
     }
 }

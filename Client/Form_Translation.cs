@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,6 @@ namespace Client
 {
     public partial class Form_Translation : Form
     {
-
         private PictureBox pictureBox;
         // Lấy từ tiếng anh nhập từ client
         private string englishWord = "";
@@ -40,10 +40,12 @@ namespace Client
         private void Form_Translation_Load(object sender, EventArgs e)
         {
             pictureBox = new PictureBox();
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox.Size = new Size(186, 100);
-            pictureBox.Location = new Point(680, 20);
-            pictureBox.Image = System.Drawing.Image.FromFile(":");
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox.BorderStyle = BorderStyle.None; 
+            pictureBox.Size = new Size(292, 271);
+            pictureBox.Location = new Point(62, 33);
+            pictureBox.BringToFront();
+            pictureBox.Image = System.Drawing.Image.FromFile(@"D:\HocTap\Nam2-Ki_2\Lập trình mạng căn bản\Template\not-found.png");
 
             if (string.IsNullOrEmpty(vietnameseMeaning))
             {
@@ -56,7 +58,15 @@ namespace Client
                     label1.Hide();
                     label2.Hide();
                     //Hiển thị nỏ found
-                    pictureBox.Show();
+                    try
+                    {
+                        pictureBox.Show();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);  
+                    }
+                    
                 }
                 else
                 {
