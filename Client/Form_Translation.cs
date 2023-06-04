@@ -45,7 +45,6 @@ namespace Client
             pictureBox.Size = new Size(292, 271);
             pictureBox.Location = new Point(62, 33);
             pictureBox.BringToFront();
-            pictureBox.Image = System.Drawing.Image.FromFile(@"D:\HocTap\Nam2-Ki_2\Lập trình mạng căn bản\Template\not-found.png");
 
             if (string.IsNullOrEmpty(vietnameseMeaning))
             {
@@ -100,7 +99,6 @@ namespace Client
                     return null;
                 }
             }
-
         }
 
         public string Substring_Word(string a)
