@@ -24,12 +24,21 @@ namespace DoAnLapTrinhMang
         {
             InitializeComponent();
             button2.Hide();
+            InitServer();
+
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void InitServer()
         {
             server = new UdpClient(8088);
             endPoint = new IPEndPoint(IPAddress.Any, 8088);
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _connected = true;
             Task.Factory.StartNew(() => ListenForRequests());
             button1.Hide();
             button2.Show();
@@ -37,7 +46,7 @@ namespace DoAnLapTrinhMang
 
         private void ListenForRequests()
         {
-            while (_connected)
+            while(_connected)
             {
                 // Nhận dữ liệu từ ứng dụng B
                 byte[] receiveBytes = server.Receive(ref endPoint);
@@ -63,7 +72,6 @@ namespace DoAnLapTrinhMang
         private void button2_Click(object sender, EventArgs e)
         {
             _connected = false;
-            server.Close();
             button1.Show();
             button2.Hide();
         }
@@ -71,6 +79,12 @@ namespace DoAnLapTrinhMang
         private void Server_Load(object sender, EventArgs e)
         {
             button1.Focus();
+        }
+
+        private void button_thoat_Click(object sender, EventArgs e)
+        {
+            server.Close();
+            Application.Exit();
         }
     }
 }

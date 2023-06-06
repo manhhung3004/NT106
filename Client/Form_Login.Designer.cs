@@ -56,6 +56,7 @@
             this.textBox_tk.Name = "textBox_tk";
             this.textBox_tk.Size = new System.Drawing.Size(228, 28);
             this.textBox_tk.TabIndex = 1;
+            this.textBox_tk.Text = "taikhoan1";
             // 
             // textBox_mk
             // 
@@ -66,6 +67,7 @@
             this.textBox_mk.PasswordChar = '*';
             this.textBox_mk.Size = new System.Drawing.Size(228, 29);
             this.textBox_mk.TabIndex = 2;
+            this.textBox_mk.Text = "1234";
             // 
             // label1
             // 

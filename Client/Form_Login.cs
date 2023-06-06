@@ -26,14 +26,20 @@ namespace Client
                 sqlConnection.Open();
                 string tk = textBox_tk.Text;
                 string mk = textBox_mk.Text;
-                string sql = "SELECT * FROM Tk_NguoiDung WHERE TaiKhoan = '" + tk + "' AND MatKhau = '" + mk + "'";
-                SqlCommand  cmd = new SqlCommand(sql, sqlConnection);
+                string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = '" + tk + "' AND MatKhau = '" + mk + "'";
+                SqlCommand cmd = new SqlCommand(sql, sqlConnection);
                 SqlDataReader rdr = cmd.ExecuteReader();
                 if (rdr.Read())
                 {
                     MessageBox.Show("Đăng nhập thành công");
                     Hide();
-                    Form_Client client = new Form_Client();
+                    Form_Client client = new Form_Client()
+                    {
+                        Sql = sqlConnection,
+                        Taikhoan = tk,
+                        Matkhau = mk,
+                    };
+                    rdr.Close();
                     client.ShowDialog();
                     Close();
                 }
@@ -47,7 +53,6 @@ namespace Client
             {
                 MessageBox.Show(ex.Message);
             };
-
         }
 
         private void button2_Click(object sender, EventArgs e)

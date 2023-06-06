@@ -41,6 +41,7 @@ namespace DoAnLapTrinhMang
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button_thoat = new System.Windows.Forms.Button();
             label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -190,6 +191,7 @@ namespace DoAnLapTrinhMang
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.button_thoat);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -197,6 +199,16 @@ namespace DoAnLapTrinhMang
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(363, 239);
             this.panel2.TabIndex = 13;
+            // 
+            // button_thoat
+            // 
+            this.button_thoat.Location = new System.Drawing.Point(274, 202);
+            this.button_thoat.Name = "button_thoat";
+            this.button_thoat.Size = new System.Drawing.Size(75, 23);
+            this.button_thoat.TabIndex = 2;
+            this.button_thoat.Text = "Thoát";
+            this.button_thoat.UseVisualStyleBackColor = true;
+            this.button_thoat.Click += new System.EventHandler(this.button_thoat_Click);
             // 
             // Server
             // 
@@ -229,6 +241,7 @@ namespace DoAnLapTrinhMang
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button_thoat;
     }
 }
 

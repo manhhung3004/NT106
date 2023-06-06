@@ -39,33 +39,29 @@ namespace Client
 
         private void Form_Translation_Load(object sender, EventArgs e)
         {
-            pictureBox = new PictureBox();
-            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox.BorderStyle = BorderStyle.None; 
-            pictureBox.Size = new Size(292, 271);
-            pictureBox.Location = new Point(62, 33);
+            pictureBox = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BorderStyle = BorderStyle.None,
+                Size = new Size(292, 271),
+                Location = new Point(62, 33)
+            };
             pictureBox.BringToFront();
 
-            if (string.IsNullOrEmpty(vietnameseMeaning))
+            if (!string.IsNullOrEmpty(vietnameseMeaning))
             {
-                label1.Text = "Not Found";
-            }
-            else
-            {
-                if(vietnameseMeaning.ToString() == "Not Found")
+                if (vietnameseMeaning.ToString() == "Not Found")
                 {
                     label1.Hide();
                     label2.Hide();
-                    //Hiển thị nỏ found
                     try
                     {
-                        pictureBox.Show();
+                        MessageBox.Show("Not Found!!!!!!1");
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);  
+                        MessageBox.Show(ex.Message);
                     }
-                    
                 }
                 else
                 {
@@ -74,8 +70,9 @@ namespace Client
                     label2.Text = $"{Substring_Word(vietnameseMeaning)} ";
                     pictureBox.Hide();
                 }
-                
             }
+
+            Hide();
         }
 
         public string Substring_Meaning_Word(string a)

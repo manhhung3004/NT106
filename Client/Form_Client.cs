@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -20,18 +21,19 @@ namespace Client
         UdpClient client;
         IPEndPoint endPoint;
 
-        public Form_Client()
-        {
-            InitializeComponent();
-        }
         public string englishWord;
         public string vietnameseMeaning;
         public GroupBox groupBox;
 
+        public Form_Client()
+        {
+            InitializeComponent();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             client = new UdpClient();
-            endPoint = new IPEndPoint(IPAddress.Parse(textBox1.Text),int.Parse(textBox2.Text));
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),int.Parse("8088"));
             try
             {
                 client.Connect(endPoint);
@@ -91,7 +93,7 @@ namespace Client
                 MaximumSize = new Size(298, 20),
                 Font = new Font("Times New Roman", 8, FontStyle.Bold)
 
-        };
+            };
             groupBox.Controls.Add(lb_Eng);
 
             string text_Show;
@@ -113,7 +115,6 @@ namespace Client
                 Size = new Size(292, 20),
                 MaximumSize = new Size(292, 90),
             };
-
             groupBox.Controls.Add(lb_Viet);
             flowLayoutPanel1.Controls.Add(groupBox);
         }
@@ -155,9 +156,43 @@ namespace Client
             return false;
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void bt_Note_Click(object sender, EventArgs e)
         {
+            Forms_Note forms_Note = new Forms_Note()
+            {
+                SqlConnection = sql,
+                Taikhoan = taikhoan,
+                Matkhau = matkhau,
+            };
+            forms_Note.Show();
+        }
 
+        // Lấy dữ liệu từ form_login
+        private SqlConnection sql;
+        public SqlConnection Sql
+        {
+            get { return sql; }
+            set { sql = value; }
+        }
+
+        private string taikhoan;
+        public string Taikhoan
+        {
+            get { return taikhoan; }
+            set { taikhoan = value; }
+        }
+
+        // Giữ connect sql
+        private string matkhau;
+        public string Matkhau
+        {
+            get { return matkhau; }
+            set { matkhau = value; }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            flowLayoutPanel1.ResumeLayout();
         }
     }
 }
