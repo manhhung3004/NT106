@@ -62,7 +62,6 @@ namespace DoAnLapTrinhMang
                 {
                     vietnameseMeaning = "Not Found";
                 }
-
                 // Gửi trả lại nghĩa tiếng Việt tương ứng cho ứng dụng B
                 byte[] sendBytes = Encoding.UTF8.GetBytes(vietnameseMeaning);
                 server.Send(sendBytes, sendBytes.Length, endPoint);
