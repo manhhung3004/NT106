@@ -39,39 +39,21 @@ namespace Client
 
         private void Form_Translation_Load(object sender, EventArgs e)
         {
-            pictureBox = new PictureBox
-            {
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BorderStyle = BorderStyle.None,
-                Size = new Size(292, 271),
-                Location = new Point(62, 33)
-            };
-            pictureBox.BringToFront();
-
             if (!string.IsNullOrEmpty(vietnameseMeaning))
             {
                 if (vietnameseMeaning.ToString() == "Not Found")
                 {
                     label1.Hide();
                     label2.Hide();
-                    try
-                    {
-                        MessageBox.Show("Not Found!!!!!!1");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    MessageBox.Show("Not Found!!!!!!");
                 }
                 else
                 {
                     label1.Show(); label2.Show();
                     label1.Text = $"{Substring_Meaning_Word(vietnameseMeaning)}";
                     label2.Text = $"{Substring_Word(vietnameseMeaning)} ";
-                    pictureBox.Hide();
                 }
             }
-
             Hide();
         }
 
