@@ -8,57 +8,83 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Net.Sockets;
+using System.Net;
 
 namespace Client
 {
     public partial class Form_Login : Form
     {
+        UdpClient clientServer;
+        IPEndPoint endPoint;
+
+        private string Taikhoan = "";
+        private string Matkhau = "";
+
         public Form_Login()
         {
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Taikhoan = textBox_tk.Text;
+            Matkhau = textBox_mk.Text;
             try
             {
-                SqlConnection sqlConnection = new SqlConnection(@"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True");
-                sqlConnection.Open();
-                string tk = textBox_tk.Text;
-                string mk = textBox_mk.Text;
-                string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = '" + tk + "' AND MatKhau = '" + mk + "'";
-                SqlCommand cmd = new SqlCommand(sql, sqlConnection);
-                SqlDataReader rdr = cmd.ExecuteReader();
-                if (rdr.Read())
-                {
-                    MessageBox.Show("Đăng nhập thành công");
+                if (ConnectToServer(Taikhoan, Matkhau))
+                { 
+                    MessageBox.Show("Đăng nhập thành công!!!!");
                     Hide();
                     Form_Client client = new Form_Client()
                     {
-                        Sql = sqlConnection,
-                        Taikhoan = tk,
-                        Matkhau = mk,
+                        Taikhoan = Taikhoan,
+                        Matkhau = Matkhau,
+                        client = clientServer,
+                        endPoint = endPoint
                     };
-                    rdr.Close();
                     client.ShowDialog();
-                    Close();
                 }
                 else
                 {
-                    MessageBox.Show("Đăng nhập thất bại");
-                    textBox_tk.Focus();
+                    MessageBox.Show("Đăng nhập thất bại!!!! Vui lòng kiểm tra lại tài khoản hoặc mật khẩu của bạn");
                 }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            };
+            }      
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
             Application.Exit();
+        }
+
+        private bool ConnectToServer(string username, string password)
+        {
+            clientServer = new UdpClient();
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8088);
+            try
+            {
+                clientServer.Connect(endPoint);
+                // Gửi tài khoản và mật khẩu để kiểm tra
+                byte[] sendBytes = Encoding.UTF8.GetBytes(username + ";" + password);
+                clientServer.Send(sendBytes, sendBytes.Length);
+
+                // Nhận kết quả 
+                byte[] receiveBytes = clientServer.Receive(ref endPoint);
+                string result = Encoding.UTF8.GetString(receiveBytes);
+                if (result == "True") { return true; }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
     }
 }

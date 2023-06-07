@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,67 +20,38 @@ namespace Client
             InitializeComponent();
         }
 
+        string Data;
+
         private void button_save_Click(object sender, EventArgs e)
         {
-            // Thằng này auto đóng
-           if(sqlConnection.State == ConnectionState.Closed)
-           {
-                MessageBox.Show("Connection đã đóng");
-           }
-           else
-           {
-                string sql = "UPDATE Tk_Nguoidung SET Note = @Note WHERE TaiKhoan = '" + taikhoan + "' AND MatKhau = '" + matkhau + "'";
-                using (SqlCommand command = new SqlCommand(sql, sqlConnection))
-                {
-                    string note = richTextBox1.Text;
-                    command.Parameters.AddWithValue("@Note", note);
-                    int result = command.ExecuteNonQuery();
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Thêm dữ liệu thành công!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Thêm dữ liệu không thành công!");
-                    }
-                }
-           }
+            // Gửi cờ hiệu lệnh lưu
+            byte[] sendBytes = Encoding.UTF8.GetBytes("flag Saved");
+            client.Send(sendBytes, sendBytes.Length);
+
+            byte[] receiveBytes = client.Receive(ref endPoint);
+            Data = Encoding.UTF8.GetString(receiveBytes);
+
+            MessageBox.Show(Data);
+
+            if(Data == "True")
+            {
+                string DataSaved = richTextBox1.Text;
+                byte[] sendBytes1 = Encoding.UTF8.GetBytes(DataSaved);
+                client.Send(sendBytes1, sendBytes1.Length);
+            }
+            else
+            {
+                MessageBox.Show("Lưu thất bại");
+            }
+
         }
 
         private void Forms_Note_Load(object sender, EventArgs e)
         {
-            if (sqlConnection.State == ConnectionState.Closed)
-            {
-                MessageBox.Show("Connection đã đóng");
-            }
-            else
-            {
-                string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = '" + taikhoan + "' AND MatKhau = '" + matkhau + "'";
-                using (SqlCommand command = new SqlCommand(sql, sqlConnection))
-                {
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            if (!reader.IsDBNull(reader.GetOrdinal("Note")))
-                            {
-                                string note = reader.GetString(reader.GetOrdinal("Note"));
-                                richTextBox1.Text = note;
-                            }
-                            else
-                            {
-                                richTextBox1.Text = "";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu!");
-                    }
-                    reader.Close();
-                }
-            }
+            // Nhận data về để load
+            byte[] receiveBytes = client.Receive(ref endPoint);
+            Data = Encoding.UTF8.GetString(receiveBytes);
+            richTextBox1.Text = Data;
         }
 
         private void button_Thoat_Click(object sender, EventArgs e)
@@ -100,11 +73,19 @@ namespace Client
             set { matkhau = value; }
         }
 
-        private SqlConnection sqlConnection;
-        public SqlConnection SqlConnection
+        private UdpClient client;
+        public UdpClient Client
         {
-            get { return sqlConnection; }
-            set { sqlConnection = value; }
+            get { return client; }
+            set { client = value; }
         }
+
+        private IPEndPoint endPoint;
+        public IPEndPoint Endpoint
+        {
+            get { return endPoint; }
+            set { endPoint = value; }
+        }
+
     }
 }

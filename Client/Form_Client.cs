@@ -18,8 +18,19 @@ namespace Client
 {
     public partial class Form_Client : Form
     {
-        UdpClient client;
-        IPEndPoint endPoint;
+        public UdpClient client;
+        public UdpClient Client
+        {
+            get { return client; }
+            set { client = value; }
+        }
+
+        public IPEndPoint endPoint;
+        public IPEndPoint Endpoint
+        {
+            get { return endPoint; }
+            set { endPoint = value; }
+        }
 
         public string englishWord;
         public string vietnameseMeaning;
@@ -32,17 +43,6 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
-            client = new UdpClient();
-            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),int.Parse("8088"));
-            try
-            {
-                client.Connect(endPoint);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
             if (client != null && client.Client.Connected)
             {
                 // Lấy nội dung tin nhắn từ textBox_Word
@@ -56,17 +56,11 @@ namespace Client
                 byte[] receiveBytes = client.Receive(ref endPoint);
                 vietnameseMeaning = Encoding.UTF8.GetString(receiveBytes);
 
-                Form_Translation form_Translation = new Form_Translation()
-                {
-                    EnglishWord = englishWord,
-                    VietnameseMeaning = vietnameseMeaning
-                };
-                form_Translation.Show();
                 History(englishWord,vietnameseMeaning);
             }
             else
             {
-                MessageBox.Show("Please connect to server first...");
+                MessageBox.Show("Dịch bị lôi!!!!!!!");
             }
         }
 
@@ -96,19 +90,9 @@ namespace Client
             };
             groupBox.Controls.Add(lb_Eng);
 
-            string text_Show;
-            if (Check_Word(vietnameseMeaning))
-            {
-               text_Show = Substring_Meaning_Word(vietnameseMeaning);
-            }
-            else
-            {
-                text_Show = vietnameseMeaning;
-            }
-
             Label lb_Viet = new Label
             {
-                Text = text_Show,
+                Text = vietnameseMeaning,
                 Font = new Font("Times New Roman", 8, FontStyle.Regular),
                 Location = new Point(20, 30),
                 AutoSize = true,
@@ -124,56 +108,24 @@ namespace Client
             //if( )
         }
 
-        public string Substring_Meaning_Word(string a)
-        {
-
-            if (string.IsNullOrEmpty(a))
-            {
-                return null;
-            }
-            else
-            {
-                int startIndex = a.IndexOf('<');
-                int endIndex = a.IndexOf('>');
-                if (startIndex >= 0 && endIndex >= 0 && endIndex > startIndex)
-                {
-                    string answer = a.Substring(startIndex + 1, endIndex - startIndex - 1);
-                    return answer;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        private bool Check_Word (string word)
-        {
-            foreach (char c in word)
-            {
-                if (c == '<') { return true; }
-            }
-            return false;
-        }
-
         private void bt_Note_Click(object sender, EventArgs e)
         {
+            // Gửi cờ hiệu tới Server 
+            byte[] sendBytes = Encoding.UTF8.GetBytes("flag moved");
+            client.Send(sendBytes, sendBytes.Length);
+
             Forms_Note forms_Note = new Forms_Note()
             {
-                SqlConnection = sql,
+                //SqlConnection = sql,
                 Taikhoan = taikhoan,
                 Matkhau = matkhau,
+                Client = Client,
+                Endpoint = Endpoint,
             };
             forms_Note.Show();
         }
 
         // Lấy dữ liệu từ form_login
-        private SqlConnection sql;
-        public SqlConnection Sql
-        {
-            get { return sql; }
-            set { sql = value; }
-        }
 
         private string taikhoan;
         public string Taikhoan

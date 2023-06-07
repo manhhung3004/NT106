@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace DoAnLapTrinhMang
@@ -13,20 +18,15 @@ namespace DoAnLapTrinhMang
         private bool _connected = true;
         private UdpClient server;
         private IPEndPoint endPoint;
-        private readonly Dictionary<string, string> dictionary = new Dictionary<string, string>()
-        {
-            { "Computer", "(Máy tính) <Máy tính là một thiết bị điện toán có khả năng nhận, lưu trữ và xử lý thông tin một cách hữu ích. Một máy tính được lập trình để thực hiện các hoạt động logic hoặc số học tự động>"},
-            { "RAM", "(Bộ nhớ trong) <RAM (Random Access Memory) là một loại bộ nhớ khả biến cho phép đọc - ghi ngẫu nhiên dữ liệu đến bất kỳ vị trí nào trong bộ nhớ dựa theo địa chỉ của bộ nhớ. Tất cả mọi thông tin lưu trên RAM chỉ là tạm thời và chúng sẽ mất đi khi không còn nguồn điện cung cấp.>" },
-            { "HDD", "(Ổ đĩa cứng) <là ổ cứng truyền thống, nguyên lý hoạt động cơ bản là có một đĩa tròn làm bằng nhôm (hoặc thủy tinh, hoặc gốm) được phủ vật liệu từ tính. Giữa ổ đĩa có một động cơ quay để đọc/ghi dữ liệu, kết hợp với những thiết bị này là những bo mạch điện tử nhằm điều khiển đầu đọc/ghi đúng vào vị trí của cái đĩa từ lúc nãy khi đang quay để giải mã thông tin>" }
-        };
+        public SqlConnection sqlConnection;
+        public SqlCommand command;
+        public SqlDataReader reader;
 
         public Server()
         {
             InitializeComponent();
             button2.Hide();
             InitServer();
-
-
         }
 
         private void InitServer()
@@ -35,36 +35,162 @@ namespace DoAnLapTrinhMang
             endPoint = new IPEndPoint(IPAddress.Any, 8088);
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             _connected = true;
-            Task.Factory.StartNew(() => ListenForRequests());
+            Task.Factory.StartNew(() => ListenForRequestsAsync());
             button1.Hide();
             button2.Show();
         }
 
-        private void ListenForRequests()
+        private async Task ListenForRequestsAsync()
         {
-            while(_connected)
+            try
             {
-                // Nhận dữ liệu từ ứng dụng B
-                byte[] receiveBytes = server.Receive(ref endPoint);
-                string englishWord = Encoding.UTF8.GetString(receiveBytes);
+                string note;
+                byte[] receiveBytes;
+                string[] loginData;
+                string username;
+                string password;
+                string englishText;
+                string vietnameseText;
+                byte[] sendBytes;
 
-                // Tìm kiếm nghĩa tiếng Việt tương ứng trong từ điển
-                string vietnameseMeaning = "";                
-                if (dictionary.ContainsKey(englishWord))
+                while (true)
                 {
-                    vietnameseMeaning = dictionary[englishWord];
+                    receiveBytes = server.Receive(ref endPoint);
+                    loginData = Encoding.UTF8.GetString(receiveBytes).Split(';');
+                    username = loginData[0];
+                    password = loginData[1];
+
+                    if (CheckLogin(username, password))
+                    {
+                        sendBytes = Encoding.UTF8.GetBytes("True");
+                        server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                        bool formNoteFlag = false;
+                        bool updateNoteFlag = false;
+
+                        while (true)
+                        {
+                            receiveBytes = server.Receive(ref endPoint);
+                            englishText = Encoding.UTF8.GetString(receiveBytes);
+
+                            if (englishText == "flag moved")
+                            {
+                                formNoteFlag = true;
+                                updateNoteFlag = false;
+                            }
+                            else if (englishText == "flag Saved")
+                            {
+                                formNoteFlag = false;
+                                updateNoteFlag = true;
+                            }
+                            else
+                            {
+                                formNoteFlag = false;
+                                updateNoteFlag = false;
+                            }
+
+                            if (formNoteFlag)
+                            {
+                                if (sqlConnection.State == ConnectionState.Closed)
+                                {
+                                    MessageBox.Show("Connection đã đóng");
+                                }
+                                else
+                                {
+                                    string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                    using (SqlCommand command = new SqlCommand(sql, sqlConnection))
+                                    {
+                                        command.Parameters.AddWithValue("@Username", username);
+                                        command.Parameters.AddWithValue("@Password", password);
+                                        SqlDataReader reader = command.ExecuteReader();
+                                        if (reader.HasRows)
+                                        {
+                                            while (reader.Read())
+                                            {
+                                                if (!reader.IsDBNull(reader.GetOrdinal("Note")))
+                                                {
+                                                    note = reader.GetString(reader.GetOrdinal("Note"));
+                                                    sendBytes = Encoding.UTF8.GetBytes(note);
+                                                    server.Send(sendBytes, sendBytes.Length, endPoint);
+                                                }
+                                                else
+                                                {
+                                                    note = "";
+                                                    sendBytes = Encoding.UTF8.GetBytes(note);
+                                                    server.Send(sendBytes, sendBytes.Length, endPoint);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Không tìm thấy dữ liệu!");
+                                        }
+                                        reader.Close();
+                                    }
+                                }
+                            }
+                            else if (updateNoteFlag)
+                            {
+                                // Trả về true cho Form_Note
+                                sendBytes = Encoding.UTF8.GetBytes("True");
+                                server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                                receiveBytes = server.Receive(ref endPoint);
+                                note = Encoding.UTF8.GetString(receiveBytes);
+
+                                if (sqlConnection.State == ConnectionState.Closed)
+                                {
+                                    MessageBox.Show("Connection đã đóng");
+                                }
+                                else
+                                {
+                                    string sql = "UPDATE Tk_Nguoidung SET Note = @Note WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                    using (SqlCommand command = new SqlCommand(sql, sqlConnection))
+                                    {
+                                        command.Parameters.AddWithValue("@Note", note);
+                                        command.Parameters.AddWithValue("@Username", username);
+                                        command.Parameters.AddWithValue("@Password", password);
+                                        int result = command.ExecuteNonQuery();
+                                        if (result > 0)
+                                        {
+                                            MessageBox.Show("Thêm dữ liệu thành công!");
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Thêm dữ liệu không thành công!");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // Dịch chuỗi tiếng Anh và gửi kết quả dịch tiếng Việt cho client
+                                vietnameseText = await TranslateText(englishText);
+                                sendBytes = Encoding.UTF8.GetBytes(vietnameseText);
+                                server.Send(sendBytes, sendBytes.Length, endPoint);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sendBytes = Encoding.UTF8.GetBytes("False");
+                        server.Send(sendBytes, sendBytes.Length, endPoint);
+                    }
                 }
-                else
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (sqlConnection.State != ConnectionState.Closed)
                 {
-                    vietnameseMeaning = "Not Found";
+                    sqlConnection.Close();
                 }
-                // Gửi trả lại nghĩa tiếng Việt tương ứng cho ứng dụng B
-                byte[] sendBytes = Encoding.UTF8.GetBytes(vietnameseMeaning);
-                server.Send(sendBytes, sendBytes.Length, endPoint);
             }
         }
 
@@ -84,6 +210,76 @@ namespace DoAnLapTrinhMang
         {
             server.Close();
             Application.Exit();
+            Close();
+        }
+
+        public async Task<string> TranslateText(string input)
+        {
+            // Set the language from/to in the url (or pass it into this function)
+            string url = String.Format("https://translate.googleapis.com/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
+                                        "en", "vi", Uri.EscapeUriString(input));
+            HttpClient httpClient = new HttpClient();
+            string result = await httpClient.GetStringAsync(url);
+
+            // Get all json data
+            var jsonData = new JavaScriptSerializer().Deserialize<List<dynamic>>(result);
+
+            // Extract just the first array element (This is the only data we are interested in)
+            var translationItems = jsonData[0];
+
+            // Translation Data
+            string translation = "";
+
+            // Loop through the collection extracting the translated objects
+            foreach (object item in translationItems)
+            {
+                // Convert the item array to IEnumerable
+                IEnumerable translationLineObject = item as IEnumerable;
+
+                // Convert the IEnumerable translationLineObject to a IEnumerator
+                IEnumerator translationLineString = translationLineObject.GetEnumerator();
+
+                // Get first object in IEnumerator
+                translationLineString.MoveNext();
+
+                // Save its value (translated text)
+                translation += string.Format(" {0}", Convert.ToString(translationLineString.Current));
+            }
+
+            // Remove first blank character
+            if (translation.Length > 1) { translation = translation.Substring(1); };
+
+            // Return translation
+            return translation;
+        }
+
+        private bool CheckLogin(string username, string password)
+        {
+            sqlConnection = new SqlConnection(@"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True");
+            command = new SqlCommand("SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Taikhoan AND MatKhau = @Matkhau", sqlConnection);
+            command.Parameters.AddWithValue("@Taikhoan", username);
+            command.Parameters.AddWithValue("@Matkhau", password);
+
+            try
+            {
+                sqlConnection.Open();
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    reader.Close();
+                    return true;
+                }
+                else
+                {
+                    reader.Close();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
     }
 }
