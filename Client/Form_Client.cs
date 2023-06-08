@@ -18,19 +18,6 @@ namespace Client
 {
     public partial class Form_Client : Form
     {
-        public UdpClient client;
-        public UdpClient Client
-        {
-            get { return client; }
-            set { client = value; }
-        }
-
-        public IPEndPoint endPoint;
-        public IPEndPoint Endpoint
-        {
-            get { return endPoint; }
-            set { endPoint = value; }
-        }
 
         public string englishWord;
         public string vietnameseMeaning;
@@ -62,11 +49,6 @@ namespace Client
             {
                 MessageBox.Show("Dịch bị lôi!!!!!!!");
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         public void History( string EngLish, string VietNamese)
@@ -105,15 +87,6 @@ namespace Client
 
         private void Client_Load(object sender, EventArgs e)
         {
-            //if( )
-        }
-
-        private void bt_Note_Click(object sender, EventArgs e)
-        {
-            // Gửi cờ hiệu tới Server 
-            byte[] sendBytes = Encoding.UTF8.GetBytes("flag moved");
-            client.Send(sendBytes, sendBytes.Length);
-
             Forms_Note forms_Note = new Forms_Note()
             {
                 //SqlConnection = sql,
@@ -122,7 +95,7 @@ namespace Client
                 Client = Client,
                 Endpoint = Endpoint,
             };
-            forms_Note.Show();
+
         }
 
         // Lấy dữ liệu từ form_login
@@ -140,6 +113,20 @@ namespace Client
         {
             get { return matkhau; }
             set { matkhau = value; }
+        }
+
+        public UdpClient client;
+        public UdpClient Client
+        {
+            get { return client; }
+            set { client = value; }
+        }
+
+        public IPEndPoint endPoint;
+        public IPEndPoint Endpoint
+        {
+            get { return endPoint; }
+            set { endPoint = value; }
         }
 
         private void button3_Click(object sender, EventArgs e)

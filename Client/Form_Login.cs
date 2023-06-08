@@ -24,7 +24,6 @@ namespace Client
         public Form_Login()
         {
             InitializeComponent();
-            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,17 +33,18 @@ namespace Client
             try
             {
                 if (ConnectToServer(Taikhoan, Matkhau))
-                { 
-                    MessageBox.Show("Đăng nhập thành công!!!!");
-                    Hide();
-                    Form_Client client = new Form_Client()
+                {
+                    Form_Main form_Main = new Form_Main()
                     {
                         Taikhoan = Taikhoan,
                         Matkhau = Matkhau,
                         client = clientServer,
                         endPoint = endPoint
                     };
-                    client.ShowDialog();
+                    MessageBox.Show("Đăng nhập thành công!!!!");
+                    Hide();
+                    form_Main.ShowDialog();
+                    
                 }
                 else
                 {
@@ -85,6 +85,18 @@ namespace Client
                 MessageBox.Show(ex.Message);
                 return false;
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Form_Register form_Register = new Form_Register() 
+            {
+                Taikhoan = Taikhoan,
+                Matkhau = Matkhau,
+                client = clientServer,
+                endPoint = endPoint
+            };
+            form_Register.ShowDialog();
         }
     }
 }

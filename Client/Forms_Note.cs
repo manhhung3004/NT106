@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Client
 {
@@ -31,13 +32,22 @@ namespace Client
             byte[] receiveBytes = client.Receive(ref endPoint);
             Data = Encoding.UTF8.GetString(receiveBytes);
 
-            MessageBox.Show(Data);
-
             if(Data == "True")
             {
-                string DataSaved = richTextBox1.Text;
-                byte[] sendBytes1 = Encoding.UTF8.GetBytes(DataSaved);
-                client.Send(sendBytes1, sendBytes1.Length);
+                if(richTextBox1.Text == null)
+                {
+                    richTextBox1.Text = "";
+                    string DataSaved = richTextBox1.Text;
+                    byte[] sendBytes1 = Encoding.UTF8.GetBytes(DataSaved);
+                    client.Send(sendBytes1, sendBytes1.Length);
+                }
+                else
+                {
+                    string DataSaved = richTextBox1.Text;
+                    byte[] sendBytes1 = Encoding.UTF8.GetBytes(DataSaved);
+                    client.Send(sendBytes1, sendBytes1.Length);
+                }
+                
             }
             else
             {
@@ -87,5 +97,17 @@ namespace Client
             set { endPoint = value; }
         }
 
+        private void button_Luu_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Lưu nội dung văn bản thuần túy của RichTextBox vào tệp
+                    File.WriteAllText(saveFileDialog.FileName, richTextBox1.Text);
+                }
+            }
+        }
     }
 }

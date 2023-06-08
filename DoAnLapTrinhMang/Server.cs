@@ -63,121 +63,195 @@ namespace DoAnLapTrinhMang
                     username = loginData[0];
                     password = loginData[1];
 
-                    if (CheckLogin(username, password))
+                    if (loginData[0] == "Check_account")
                     {
-                        sendBytes = Encoding.UTF8.GetBytes("True");
-                        server.Send(sendBytes, sendBytes.Length, endPoint);
-
-                        bool formNoteFlag = false;
-                        bool updateNoteFlag = false;
-
-                        while (true)
+                        sqlConnection = new SqlConnection(@"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True");
+                        using (command = new SqlCommand("SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Taikhoan", sqlConnection))
                         {
-                            receiveBytes = server.Receive(ref endPoint);
-                            englishText = Encoding.UTF8.GetString(receiveBytes);
+                            sqlConnection.Open();
+                            using (command = new SqlCommand("SELECT COUNT(*) FROM Tk_Nguoidung WHERE TaiKhoan = @TaiKhoan", sqlConnection))
+                            {
+                                command.Parameters.AddWithValue("@TaiKhoan", loginData[1]);
 
-                            if (englishText == "flag moved")
-                            {
-                                formNoteFlag = true;
-                                updateNoteFlag = false;
-                            }
-                            else if (englishText == "flag Saved")
-                            {
-                                formNoteFlag = false;
-                                updateNoteFlag = true;
-                            }
-                            else
-                            {
-                                formNoteFlag = false;
-                                updateNoteFlag = false;
-                            }
+                                var count = (int)command.ExecuteScalar();
 
-                            if (formNoteFlag)
-                            {
-                                if (sqlConnection.State == ConnectionState.Closed)
+                                if (count > 0)
                                 {
-                                    MessageBox.Show("Connection đã đóng");
+                                    // Trả lại là đã có tài khoản bị trùng
+                                    sendBytes = Encoding.UTF8.GetBytes("True");
+                                    server.Send(sendBytes, sendBytes.Length, endPoint);
                                 }
                                 else
                                 {
-                                    string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Username AND MatKhau = @Password";
-                                    using (SqlCommand command = new SqlCommand(sql, sqlConnection))
+                                    // Gửi trả về tín hiệu
+                                    sendBytes = Encoding.UTF8.GetBytes("False");
+                                    server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                                    receiveBytes = server.Receive(ref endPoint);
+                                    loginData = Encoding.UTF8.GetString(receiveBytes).Split(';');
+                                    username = loginData[0];
+                                    password = loginData[1];
+
+                                    // Chuỗi kết nối SQL Server
+                                    string connectionString = @"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True";
+
+                                    // Tạo kết nối tới SQL Server
+                                    using (SqlConnection connection = new SqlConnection(connectionString))
                                     {
-                                        command.Parameters.AddWithValue("@Username", username);
-                                        command.Parameters.AddWithValue("@Password", password);
-                                        SqlDataReader reader = command.ExecuteReader();
-                                        if (reader.HasRows)
+                                        // Mở kết nối
+                                        connection.Open();
+
+                                        // Câu lệnh SQL để thêm mới tài khoản và mật khẩu
+                                        string insertCommand = "INSERT INTO Tk_Nguoidung(TaiKhoan, MatKhau) VALUES(@TaiKhoan, @MatKhau)";
+
+                                        // Tạo đối tượng SqlCommand để thực thi câu lệnh SQL
+                                        using (SqlCommand command = new SqlCommand(insertCommand, connection))
                                         {
-                                            while (reader.Read())
+                                            // Thêm tham số cho câu lệnh SQL
+                                            command.Parameters.AddWithValue("@TaiKhoan", username);
+                                            command.Parameters.AddWithValue("@MatKhau", password);
+
+                                            // Thực thi câu lệnh SQL
+                                            int rowsAffected = command.ExecuteNonQuery();
+
+                                            // Kiểm tra xem có bao nhiêu hàng bị ảnh hưởng bởi câu lệnh SQL
+                                            if (rowsAffected > 0)
                                             {
-                                                if (!reader.IsDBNull(reader.GetOrdinal("Note")))
-                                                {
-                                                    note = reader.GetString(reader.GetOrdinal("Note"));
-                                                    sendBytes = Encoding.UTF8.GetBytes(note);
-                                                    server.Send(sendBytes, sendBytes.Length, endPoint);
-                                                }
-                                                else
-                                                {
-                                                    note = "";
-                                                    sendBytes = Encoding.UTF8.GetBytes(note);
-                                                    server.Send(sendBytes, sendBytes.Length, endPoint);
-                                                }
+                                                // Tím hiệu về thêm thành công
+                                                sendBytes = Encoding.UTF8.GetBytes("True");
+                                                server.Send(sendBytes, sendBytes.Length, endPoint);
+                                            }
+                                            else
+                                            {
+                                                // Tín hiệu về thêm thất bạn
+                                                sendBytes = Encoding.UTF8.GetBytes("False");
+                                                server.Send(sendBytes, sendBytes.Length, endPoint);
                                             }
                                         }
-                                        else
-                                        {
-                                            MessageBox.Show("Không tìm thấy dữ liệu!");
-                                        }
-                                        reader.Close();
                                     }
                                 }
-                            }
-                            else if (updateNoteFlag)
-                            {
-                                // Trả về true cho Form_Note
-                                sendBytes = Encoding.UTF8.GetBytes("True");
-                                server.Send(sendBytes, sendBytes.Length, endPoint);
-
-                                receiveBytes = server.Receive(ref endPoint);
-                                note = Encoding.UTF8.GetString(receiveBytes);
-
-                                if (sqlConnection.State == ConnectionState.Closed)
-                                {
-                                    MessageBox.Show("Connection đã đóng");
-                                }
-                                else
-                                {
-                                    string sql = "UPDATE Tk_Nguoidung SET Note = @Note WHERE TaiKhoan = @Username AND MatKhau = @Password";
-                                    using (SqlCommand command = new SqlCommand(sql, sqlConnection))
-                                    {
-                                        command.Parameters.AddWithValue("@Note", note);
-                                        command.Parameters.AddWithValue("@Username", username);
-                                        command.Parameters.AddWithValue("@Password", password);
-                                        int result = command.ExecuteNonQuery();
-                                        if (result > 0)
-                                        {
-                                            MessageBox.Show("Thêm dữ liệu thành công!");
-                                        }
-                                        else
-                                        {
-                                            MessageBox.Show("Thêm dữ liệu không thành công!");
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                // Dịch chuỗi tiếng Anh và gửi kết quả dịch tiếng Việt cho client
-                                vietnameseText = await TranslateText(englishText);
-                                sendBytes = Encoding.UTF8.GetBytes(vietnameseText);
-                                server.Send(sendBytes, sendBytes.Length, endPoint);
                             }
                         }
+
                     }
                     else
                     {
-                        sendBytes = Encoding.UTF8.GetBytes("False");
-                        server.Send(sendBytes, sendBytes.Length, endPoint);
+                        if (CheckLogin(username, password))
+                        {
+                            sendBytes = Encoding.UTF8.GetBytes("True");
+                            server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                            bool formNoteFlag = false;
+                            bool updateNoteFlag = false;
+
+                            while (true)
+                            {
+                                receiveBytes = server.Receive(ref endPoint);
+                                englishText = Encoding.UTF8.GetString(receiveBytes);
+
+                                if (englishText == "flag moved")
+                                {
+                                    formNoteFlag = true;
+                                    updateNoteFlag = false;
+                                }
+                                else if (englishText == "flag Saved")
+                                {
+                                    formNoteFlag = false;
+                                    updateNoteFlag = true;
+                                }
+                                else
+                                {
+                                    formNoteFlag = false;
+                                    updateNoteFlag = false;
+                                }
+
+                                if (formNoteFlag)
+                                {
+                                    if (sqlConnection.State == ConnectionState.Closed)
+                                    {
+                                        MessageBox.Show("Connection đã đóng");
+                                    }
+                                    else
+                                    {
+                                        string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                        using (SqlCommand command = new SqlCommand(sql, sqlConnection))
+                                        {
+                                            command.Parameters.AddWithValue("@Username", username);
+                                            command.Parameters.AddWithValue("@Password", password);
+                                            SqlDataReader reader = command.ExecuteReader();
+                                            if (reader.HasRows)
+                                            {
+                                                while (reader.Read())
+                                                {
+                                                    if (!reader.IsDBNull(reader.GetOrdinal("Note")))
+                                                    {
+                                                        note = reader.GetString(reader.GetOrdinal("Note"));
+                                                        sendBytes = Encoding.UTF8.GetBytes(note);
+                                                        server.Send(sendBytes, sendBytes.Length, endPoint);
+                                                    }
+                                                    else
+                                                    {
+                                                        note = "";
+                                                        sendBytes = Encoding.UTF8.GetBytes(note);
+                                                        server.Send(sendBytes, sendBytes.Length, endPoint);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("Không tìm thấy dữ liệu!");
+                                            }
+                                            reader.Close();
+                                        }
+                                    }
+                                }
+                                else if (updateNoteFlag)
+                                {
+                                    // Trả về true cho Form_Note
+                                    sendBytes = Encoding.UTF8.GetBytes("True");
+                                    server.Send(sendBytes, sendBytes.Length, endPoint);
+
+                                    receiveBytes = server.Receive(ref endPoint);
+                                    note = Encoding.UTF8.GetString(receiveBytes);
+
+                                    if (sqlConnection.State == ConnectionState.Closed)
+                                    {
+                                        MessageBox.Show("Connection đã đóng");
+                                    }
+                                    else
+                                    {
+                                        string sql = "UPDATE Tk_Nguoidung SET Note = @Note WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                        using (SqlCommand command = new SqlCommand(sql, sqlConnection))
+                                        {
+                                            command.Parameters.AddWithValue("@Note", note);
+                                            command.Parameters.AddWithValue("@Username", username);
+                                            command.Parameters.AddWithValue("@Password", password);
+                                            int result = command.ExecuteNonQuery();
+                                            if (result > 0)
+                                            {
+                                                MessageBox.Show("Thêm dữ liệu thành công!");
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("Thêm dữ liệu không thành công!");
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Dịch chuỗi tiếng Anh và gửi kết quả dịch tiếng Việt cho client
+                                    vietnameseText = await TranslateText(englishText);
+                                    sendBytes = Encoding.UTF8.GetBytes(vietnameseText);
+                                    server.Send(sendBytes, sendBytes.Length, endPoint);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sendBytes = Encoding.UTF8.GetBytes("False");
+                            server.Send(sendBytes, sendBytes.Length, endPoint);
+                        }
                     }
                 }
             }
@@ -203,7 +277,6 @@ namespace DoAnLapTrinhMang
 
         private void Server_Load(object sender, EventArgs e)
         {
-            button1.Focus();
         }
 
         private void button_thoat_Click(object sender, EventArgs e)
@@ -259,7 +332,6 @@ namespace DoAnLapTrinhMang
             command = new SqlCommand("SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Taikhoan AND MatKhau = @Matkhau", sqlConnection);
             command.Parameters.AddWithValue("@Taikhoan", username);
             command.Parameters.AddWithValue("@Matkhau", password);
-
             try
             {
                 sqlConnection.Open();
