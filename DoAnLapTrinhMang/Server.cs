@@ -54,7 +54,7 @@ namespace DoAnLapTrinhMang
                 string englishText;
                 string vietnameseText;
                 byte[] sendBytes;
-
+                
                 while (true)
                 {
                     receiveBytes = server.Receive(ref endPoint);
@@ -64,11 +64,11 @@ namespace DoAnLapTrinhMang
 
                     if (loginData[0] == "Check_account")
                     {
-                        sqlConnection = new SqlConnection(@"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True");
-                        using (command = new SqlCommand("SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Taikhoan", sqlConnection))
+                        sqlConnection = new SqlConnection(@"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True");
+                        using (command = new SqlCommand("SELECT * FROM Quanly_Nguoidung WHERE TaiKhoan = @Taikhoan", sqlConnection))
                         {
                             sqlConnection.Open();
-                            using (command = new SqlCommand("SELECT COUNT(*) FROM Tk_Nguoidung WHERE TaiKhoan = @TaiKhoan", sqlConnection))
+                            using (command = new SqlCommand("SELECT COUNT(*) FROM Quanly_Nguoidung WHERE TaiKhoan = @TaiKhoan", sqlConnection))
                             {
                                 command.Parameters.AddWithValue("@TaiKhoan", loginData[1]);
 
@@ -92,7 +92,7 @@ namespace DoAnLapTrinhMang
                                     password = loginData[1];
 
                                     // Chuỗi kết nối SQL Server
-                                    string connectionString = @"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True";
+                                    string connectionString = @"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True";
 
                                     // Tạo kết nối tới SQL Server
                                     using (SqlConnection connection = new SqlConnection(connectionString))
@@ -101,7 +101,7 @@ namespace DoAnLapTrinhMang
                                         connection.Open();
 
                                         // Câu lệnh SQL để thêm mới tài khoản và mật khẩu
-                                        string insertCommand = "INSERT INTO Tk_Nguoidung(TaiKhoan, MatKhau) VALUES(@TaiKhoan, @MatKhau)";
+                                        string insertCommand = "INSERT INTO Quanly_Nguoidung(TaiKhoan, MatKhau) VALUES(@TaiKhoan, @MatKhau)";
 
                                         // Tạo đối tượng SqlCommand để thực thi câu lệnh SQL
                                         using (SqlCommand command = new SqlCommand(insertCommand, connection))
@@ -172,7 +172,7 @@ namespace DoAnLapTrinhMang
                                     }
                                     else
                                     {
-                                        string sql = "SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                        string sql = "SELECT * FROM Quanly_Nguoidung WHERE TaiKhoan = @Username AND MatKhau = @Password";
                                         using (SqlCommand command = new SqlCommand(sql, sqlConnection))
                                         {
                                             command.Parameters.AddWithValue("@Username", username);
@@ -219,7 +219,7 @@ namespace DoAnLapTrinhMang
                                     }
                                     else
                                     {
-                                        string sql = "UPDATE Tk_Nguoidung SET Note = @Note WHERE TaiKhoan = @Username AND MatKhau = @Password";
+                                        string sql = "UPDATE Quanly_Nguoidung SET Note = @Note WHERE TaiKhoan = @Username AND MatKhau = @Password";
                                         using (SqlCommand command = new SqlCommand(sql, sqlConnection))
                                         {
                                             command.Parameters.AddWithValue("@Note", note);
@@ -326,8 +326,8 @@ namespace DoAnLapTrinhMang
 
         private bool CheckLogin(string username, string password)
         {
-            sqlConnection = new SqlConnection(@"Data Source=MANHHUNG;Initial Catalog=QuanLy;Integrated Security=True");
-            command = new SqlCommand("SELECT * FROM Tk_Nguoidung WHERE TaiKhoan = @Taikhoan AND MatKhau = @Matkhau", sqlConnection);
+            sqlConnection = new SqlConnection(@"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True");
+            command = new SqlCommand("SELECT * FROM Quanly_Nguoidung WHERE TaiKhoan = @Taikhoan AND MatKhau = @Matkhau", sqlConnection);
             command.Parameters.AddWithValue("@Taikhoan", username);
             command.Parameters.AddWithValue("@Matkhau", password);
             try

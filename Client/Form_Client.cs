@@ -43,6 +43,7 @@ namespace Client
                 byte[] receiveBytes = client.Receive(ref endPoint);
                 vietnameseMeaning = Encoding.UTF8.GetString(receiveBytes);
 
+                textBox_dich.Text = vietnameseMeaning;
                 History(englishWord,vietnameseMeaning);
             }
             else
@@ -51,35 +52,31 @@ namespace Client
             }
         }
 
-        public void History( string EngLish, string VietNamese)
+        public void History(string EngLish, string VietNamese)
         {
             groupBox = new GroupBox
             {
-                MinimumSize = new Size(315, 90),
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
+                MinimumSize = new Size(500, 90),
+                AutoSize = false,
+                Size = new Size(298, 90),
+                Dock = DockStyle.None
             };
 
             Label lb_Eng = new Label
             {
                 Text = EngLish,
-                Location = new Point(140, 10),
-                AutoSize = true,
-                Size = new Size(298, 20),
-                MaximumSize = new Size(298, 20),
-                Font = new Font("Times New Roman", 8, FontStyle.Bold)
-
+                Location = new Point(230, 10),
+                Font = new Font("Times New Roman", 14, FontStyle.Bold),
+                Dock = DockStyle.None
             };
             groupBox.Controls.Add(lb_Eng);
 
             Label lb_Viet = new Label
             {
-                Text = vietnameseMeaning,
-                Font = new Font("Times New Roman", 8, FontStyle.Regular),
-                Location = new Point(20, 30),
-                AutoSize = true,
-                Size = new Size(292, 20),
-                MaximumSize = new Size(292, 90),
+                Text = VietNamese,
+                Font = new Font("Times New Roman", 12, FontStyle.Regular),
+                Location = new Point(230, 35),
+                Dock = DockStyle.None
             };
             groupBox.Controls.Add(lb_Viet);
             flowLayoutPanel1.Controls.Add(groupBox);

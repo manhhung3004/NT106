@@ -32,9 +32,9 @@ namespace Client
             byte[] receiveBytes = client.Receive(ref endPoint);
             Data = Encoding.UTF8.GetString(receiveBytes);
 
-            if(Data == "True")
+            if (Data == "True")
             {
-                if(richTextBox1.Text == null)
+                if (richTextBox1.Text == null)
                 {
                     richTextBox1.Text = "";
                     string DataSaved = richTextBox1.Text;
@@ -47,7 +47,7 @@ namespace Client
                     byte[] sendBytes1 = Encoding.UTF8.GetBytes(DataSaved);
                     client.Send(sendBytes1, sendBytes1.Length);
                 }
-                
+
             }
             else
             {
@@ -101,11 +101,17 @@ namespace Client
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                // Initialize the SaveFileDialog to specify the RTF extension for the file.
+                saveFileDialog.DefaultExt = "*.txt";
+                saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+                // Determine if the user selected a file name from the saveFileDialog.
+                if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
+                   saveFileDialog.FileName.Length > 0)
                 {
-                    // Lưu nội dung văn bản thuần túy của RichTextBox vào tệp
-                    File.WriteAllText(saveFileDialog.FileName, richTextBox1.Text);
+                    // Save the contents of the RichTextBox into the file.
+                    richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.UnicodePlainText);
+                    MessageBox.Show("save successfully", "Address File : " + saveFileDialog.FileName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
