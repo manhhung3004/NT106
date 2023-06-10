@@ -105,5 +105,11 @@ namespace Client
             Close();
             Application.Exit();
         }
+
+        private void button_Sendmail_Click(object sender, EventArgs e)
+        {
+            Form_SendMail form_SendMail = new Form_SendMail();
+            OpenChilForm(form_SendMail);
+        }
     }
 }
