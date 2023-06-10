@@ -15,7 +15,6 @@ namespace DoAnLapTrinhMang
 {
     public partial class Server : Form
     {
-        private bool _connected = true;
         private UdpClient server;
         private IPEndPoint endPoint;
         public SqlConnection sqlConnection;
@@ -37,7 +36,7 @@ namespace DoAnLapTrinhMang
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _connected = true;
+
             Task.Factory.StartNew(() => ListenForRequestsAsync());
             button1.Hide();
             button2.Show();
@@ -270,7 +269,6 @@ namespace DoAnLapTrinhMang
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _connected = false;
             button1.Show();
             button2.Hide();
         }

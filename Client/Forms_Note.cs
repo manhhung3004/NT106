@@ -97,7 +97,7 @@ namespace Client
             set { endPoint = value; }
         }
 
-        private void button_Luu_Click(object sender, EventArgs e)
+        private void button_Luuvemay_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
