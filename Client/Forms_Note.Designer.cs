@@ -38,19 +38,18 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(16, 50);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 41);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(745, 325);
+            this.richTextBox1.Size = new System.Drawing.Size(560, 265);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = " ";
             // 
             // button_save
             // 
-            this.button_save.Location = new System.Drawing.Point(13, 4);
-            this.button_save.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_save.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_save.Location = new System.Drawing.Point(10, 3);
             this.button_save.Name = "button_save";
-            this.button_save.Size = new System.Drawing.Size(128, 41);
+            this.button_save.Size = new System.Drawing.Size(96, 33);
             this.button_save.TabIndex = 1;
             this.button_save.Text = "Lưu";
             this.button_save.UseVisualStyleBackColor = true;
@@ -64,17 +63,16 @@
             this.panel2.Controls.Add(this.button_save);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(779, 383);
+            this.panel2.Size = new System.Drawing.Size(584, 311);
             this.panel2.TabIndex = 24;
             // 
             // button_Luuvemay
             // 
-            this.button_Luuvemay.Location = new System.Drawing.Point(621, 7);
-            this.button_Luuvemay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Luuvemay.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Luuvemay.Location = new System.Drawing.Point(466, 6);
             this.button_Luuvemay.Name = "button_Luuvemay";
-            this.button_Luuvemay.Size = new System.Drawing.Size(139, 37);
+            this.button_Luuvemay.Size = new System.Drawing.Size(104, 30);
             this.button_Luuvemay.TabIndex = 2;
             this.button_Luuvemay.Text = "Lưu về máy";
             this.button_Luuvemay.UseVisualStyleBackColor = true;
@@ -82,12 +80,11 @@
             // 
             // Forms_Note
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 383);
+            this.ClientSize = new System.Drawing.Size(584, 311);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.panel2);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Forms_Note";
             this.Text = "Note";
             this.Load += new System.EventHandler(this.Forms_Note_Load);

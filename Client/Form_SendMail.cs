@@ -39,6 +39,8 @@ namespace Client
 
         private void LoadMail()
         {
+            button_DangNhap.Hide();
+            button_refresh.Show();
             button_PhanHoi.Show();
             listView1.Show();
             textBox_email.ReadOnly = true;
@@ -81,6 +83,7 @@ namespace Client
         {
             listView1.Hide();
             button_PhanHoi.Hide();
+            button_refresh.Hide();
         }
 
         private void button_refresh_Click(object sender, EventArgs e)

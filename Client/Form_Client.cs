@@ -56,7 +56,7 @@ namespace Client
         {
             groupBox = new GroupBox
             {
-                MinimumSize = new Size(500, 90),
+                MinimumSize = new Size(470, 90),
                 AutoSize = false,
                 Size = new Size(298, 90),
                 Dock = DockStyle.None
