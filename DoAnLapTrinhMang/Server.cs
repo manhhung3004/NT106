@@ -98,6 +98,7 @@ namespace DoAnLapTrinhMang
                                     using (SqlConnection connection = new SqlConnection(connectionString))
                                     {
                                         // Mở kết nối
+
                                         connection.Open();
 
                                         // Câu lệnh SQL để thêm mới tài khoản và mật khẩu
@@ -131,7 +132,6 @@ namespace DoAnLapTrinhMang
                                 }
                             }
                         }
-
                     }
                     else
                     {

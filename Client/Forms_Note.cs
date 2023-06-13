@@ -53,7 +53,6 @@ namespace Client
             {
                 MessageBox.Show("Lưu thất bại");
             }
-
         }
 
         private void Forms_Note_Load(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Client
             InitializeComponent();
         }
 
+        public string filepath;
+
         private void SendMailSMTP_Load(object sender, EventArgs e)
         {
             textBox_emailFrom.Text = taikhoan;
@@ -38,17 +41,48 @@ namespace Client
                 MessageBox.Show(ex.Message);
             }
 
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(textBox_Object.Text, textBox_emailFrom.Text));
-            message.To.Add(new MailboxAddress(textBox_Object.Text, textBox_EmailTo.Text));
-            message.Subject = textBox_Object.Text;
-            message.Body = new TextPart("plain")
+            if (filepath == null)
             {
-                Text = richTextBox1.Text
-            };
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress(textBox_emailFrom.Text, textBox_emailFrom.Text));
+                message.To.Add(new MailboxAddress(textBox_EmailTo.Text, textBox_EmailTo.Text));
+                message.Subject = textBox_Object.Text;
 
-            smtpClient.Send(message);
-            MessageBox.Show("Gửi thành công");
+                // Thiết lập nội dung email
+                var builder = new BodyBuilder();
+                builder.TextBody = richTextBox1.Text;
+
+                // Thiết lập nội dung email đã được xây dựng
+                message.Body = builder.ToMessageBody();
+
+                // Gửi email
+                smtpClient.Send(message);
+                smtpClient.Disconnect(true);
+
+                MessageBox.Show("Đã gửi thành công!");
+            }
+            else
+            {
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress(textBox_emailFrom.Text, textBox_emailFrom.Text));
+                message.To.Add(new MailboxAddress(textBox_EmailTo.Text, textBox_EmailTo.Text));
+                message.Subject = textBox_Object.Text;
+                var builder = new BodyBuilder();
+                builder.TextBody = richTextBox1.Text;
+
+                // Thêm tệp đính kèm
+                builder.Attachments.Add(filepath);
+
+                // Thiết lập nội dung email
+                message.Body = builder.ToMessageBody();
+
+                // Gửi email
+                smtpClient.Send(message);
+                smtpClient.Disconnect(true);
+
+                MessageBox.Show("Đã gửi thành công!");
+            }
+         
             Close();
         }
 
@@ -69,7 +103,13 @@ namespace Client
         // Tệp đính kèm
         private void button1_Click(object sender, EventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Lấy đường dẫn đến tệp tin được chọn
+                filepath = openFileDialog.FileName;
+                label_att.Text = filepath;
+            }
         }
     }
 }

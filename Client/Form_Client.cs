@@ -65,7 +65,7 @@ namespace Client
             Label lb_Eng = new Label
             {
                 Text = EngLish,
-                Location = new Point(230, 10),
+                Location = new Point(220, 10),
                 Font = new Font("Times New Roman", 14, FontStyle.Bold),
                 Dock = DockStyle.None
             };
@@ -75,7 +75,7 @@ namespace Client
             {
                 Text = VietNamese,
                 Font = new Font("Times New Roman", 12, FontStyle.Regular),
-                Location = new Point(230, 35),
+                Location = new Point(220, 35),
                 Dock = DockStyle.None
             };
             groupBox.Controls.Add(lb_Viet);
