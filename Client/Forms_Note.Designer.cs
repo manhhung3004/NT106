@@ -46,7 +46,7 @@
             // 
             // button_save
             // 
-            this.button_save.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_save.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_save.Location = new System.Drawing.Point(10, 3);
             this.button_save.Name = "button_save";
             this.button_save.Size = new System.Drawing.Size(96, 33);
@@ -69,7 +69,7 @@
             // 
             // button_Luuvemay
             // 
-            this.button_Luuvemay.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Luuvemay.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Luuvemay.Location = new System.Drawing.Point(466, 6);
             this.button_Luuvemay.Name = "button_Luuvemay";
             this.button_Luuvemay.Size = new System.Drawing.Size(104, 30);

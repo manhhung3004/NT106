@@ -18,7 +18,7 @@ namespace DoAnLapTrinhMang
         private UdpClient server;
         private IPEndPoint endPoint;
         public SqlConnection sqlConnection;
-        public SqlCommand command;
+        public SqlCommand command; 
         public SqlDataReader reader;
 
         public Server()
@@ -64,7 +64,7 @@ namespace DoAnLapTrinhMang
 
                     if (loginData[0] == "Check_account")
                     {
-                        sqlConnection = new SqlConnection(@"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True");
+                        sqlConnection = new SqlConnection(@"Data Source=DINHKHOI\SQLEXPRESS;Initial Catalog=database1;Integrated Security=True");
                         using (command = new SqlCommand("SELECT * FROM Quanly_Nguoidung WHERE TaiKhoan = @Taikhoan", sqlConnection))
                         {
                             sqlConnection.Open();
@@ -92,7 +92,7 @@ namespace DoAnLapTrinhMang
                                     password = loginData[1];
 
                                     // Chuỗi kết nối SQL Server
-                                    string connectionString = @"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True";
+                                    string connectionString = @"Data Source=DINHKHOI\SQLEXPRESS;Initial Catalog=database1;Integrated Security=True";
 
                                     // Tạo kết nối tới SQL Server
                                     using (SqlConnection connection = new SqlConnection(connectionString))
@@ -326,7 +326,7 @@ namespace DoAnLapTrinhMang
 
         private bool CheckLogin(string username, string password)
         {
-            sqlConnection = new SqlConnection(@"Data Source=LAPTOP-L7NMTJ1Q;Initial Catalog=database1;Integrated Security=True");
+            sqlConnection = new SqlConnection(@"Data Source=DINHKHOI\SQLEXPRESS;Initial Catalog=database1;Integrated Security=True");
             command = new SqlCommand("SELECT * FROM Quanly_Nguoidung WHERE TaiKhoan = @Taikhoan AND MatKhau = @Matkhau", sqlConnection);
             command.Parameters.AddWithValue("@Taikhoan", username);
             command.Parameters.AddWithValue("@Matkhau", password);
