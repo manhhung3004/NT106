@@ -18,7 +18,7 @@ namespace DoAnLapTrinhMang
         private UdpClient server;
         private IPEndPoint endPoint;
         public SqlConnection sqlConnection;
-        public SqlCommand command;
+        public SqlCommand command; 
         public SqlDataReader reader;
 
         public Server()

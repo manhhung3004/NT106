@@ -41,40 +41,37 @@
             // textBox_tk
             // 
             this.textBox_tk.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_tk.Location = new System.Drawing.Point(33, 97);
-            this.textBox_tk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox_tk.Location = new System.Drawing.Point(25, 79);
             this.textBox_tk.Multiline = true;
             this.textBox_tk.Name = "textBox_tk";
-            this.textBox_tk.Size = new System.Drawing.Size(303, 34);
+            this.textBox_tk.Size = new System.Drawing.Size(228, 28);
             this.textBox_tk.TabIndex = 2;
             // 
             // textBox_Mk
             // 
             this.textBox_Mk.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_Mk.Location = new System.Drawing.Point(33, 167);
-            this.textBox_Mk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox_Mk.Location = new System.Drawing.Point(25, 136);
             this.textBox_Mk.Multiline = true;
             this.textBox_Mk.Name = "textBox_Mk";
-            this.textBox_Mk.Size = new System.Drawing.Size(303, 34);
+            this.textBox_Mk.Size = new System.Drawing.Size(228, 28);
             this.textBox_Mk.TabIndex = 3;
             // 
             // textBox_MkXn
             // 
             this.textBox_MkXn.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_MkXn.Location = new System.Drawing.Point(33, 240);
-            this.textBox_MkXn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox_MkXn.Location = new System.Drawing.Point(25, 195);
             this.textBox_MkXn.Multiline = true;
             this.textBox_MkXn.Name = "textBox_MkXn";
-            this.textBox_MkXn.Size = new System.Drawing.Size(303, 34);
+            this.textBox_MkXn.Size = new System.Drawing.Size(228, 28);
             this.textBox_MkXn.TabIndex = 4;
             // 
             // button_dk
             // 
+            this.button_dk.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_dk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.button_dk.Location = new System.Drawing.Point(71, 302);
-            this.button_dk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_dk.Location = new System.Drawing.Point(53, 245);
             this.button_dk.Name = "button_dk";
-            this.button_dk.Size = new System.Drawing.Size(227, 43);
+            this.button_dk.Size = new System.Drawing.Size(170, 35);
             this.button_dk.TabIndex = 6;
             this.button_dk.Text = "Đăng ký";
             this.button_dk.UseVisualStyleBackColor = true;
@@ -85,10 +82,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label1.Location = new System.Drawing.Point(29, 76);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(22, 62);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 16);
+            this.label1.Size = new System.Drawing.Size(55, 14);
             this.label1.TabIndex = 7;
             this.label1.Text = "Tài khoản";
             // 
@@ -97,10 +93,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label2.Location = new System.Drawing.Point(29, 146);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(22, 119);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.Size = new System.Drawing.Size(51, 14);
             this.label2.TabIndex = 8;
             this.label2.Text = "Mật khẩu";
             // 
@@ -109,10 +104,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label3.Location = new System.Drawing.Point(112, 27);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(84, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(140, 38);
+            this.label3.Size = new System.Drawing.Size(111, 31);
             this.label3.TabIndex = 9;
             this.label3.Text = "Đăng ký";
             // 
@@ -121,19 +115,18 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label4.Location = new System.Drawing.Point(29, 219);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(22, 178);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(133, 16);
+            this.label4.Size = new System.Drawing.Size(111, 14);
             this.label4.TabIndex = 10;
             this.label4.Text = "Xác nhận lại mật khẩu";
             // 
             // Form_Register
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(214)))), ((int)(((byte)(185)))));
-            this.ClientSize = new System.Drawing.Size(371, 369);
+            this.ClientSize = new System.Drawing.Size(278, 300);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -143,7 +136,6 @@
             this.Controls.Add(this.textBox_Mk);
             this.Controls.Add(this.textBox_tk);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_Register";
             this.Text = "Đăng ký";
             this.ResumeLayout(false);

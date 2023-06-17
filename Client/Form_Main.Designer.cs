@@ -123,7 +123,7 @@
             // 
             // button_Thoat
             // 
-            this.button_Thoat.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Thoat.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Thoat.Location = new System.Drawing.Point(492, 27);
             this.button_Thoat.Name = "button_Thoat";
             this.button_Thoat.Size = new System.Drawing.Size(96, 44);
@@ -134,8 +134,10 @@
             // 
             // panel_body
             // 
+            this.panel_body.AutoScroll = true;
             this.panel_body.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(214)))), ((int)(((byte)(185)))));
             this.panel_body.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_body.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel_body.Location = new System.Drawing.Point(200, 100);
             this.panel_body.Name = "panel_body";
             this.panel_body.Size = new System.Drawing.Size(600, 350);

@@ -47,44 +47,44 @@
             // 
             this.textBox_emailFrom.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_emailFrom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.textBox_emailFrom.Location = new System.Drawing.Point(139, 25);
-            this.textBox_emailFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_emailFrom.Location = new System.Drawing.Point(122, 19);
+            this.textBox_emailFrom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox_emailFrom.Multiline = true;
             this.textBox_emailFrom.Name = "textBox_emailFrom";
             this.textBox_emailFrom.ReadOnly = true;
-            this.textBox_emailFrom.Size = new System.Drawing.Size(268, 38);
+            this.textBox_emailFrom.Size = new System.Drawing.Size(274, 32);
             this.textBox_emailFrom.TabIndex = 0;
             // 
             // textBox_EmailTo
             // 
             this.textBox_EmailTo.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_EmailTo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.textBox_EmailTo.Location = new System.Drawing.Point(139, 69);
-            this.textBox_EmailTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_EmailTo.Location = new System.Drawing.Point(122, 55);
+            this.textBox_EmailTo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox_EmailTo.Multiline = true;
             this.textBox_EmailTo.Name = "textBox_EmailTo";
-            this.textBox_EmailTo.Size = new System.Drawing.Size(268, 37);
+            this.textBox_EmailTo.Size = new System.Drawing.Size(274, 31);
             this.textBox_EmailTo.TabIndex = 1;
             // 
             // textBox_Object
             // 
             this.textBox_Object.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_Object.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.textBox_Object.Location = new System.Drawing.Point(139, 112);
-            this.textBox_Object.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_Object.Location = new System.Drawing.Point(122, 90);
+            this.textBox_Object.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox_Object.Multiline = true;
             this.textBox_Object.Name = "textBox_Object";
-            this.textBox_Object.Size = new System.Drawing.Size(268, 42);
+            this.textBox_Object.Size = new System.Drawing.Size(274, 35);
             this.textBox_Object.TabIndex = 2;
             // 
             // button_Gui
             // 
-            this.button_Gui.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Gui.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Gui.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.button_Gui.Location = new System.Drawing.Point(317, 431);
-            this.button_Gui.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Gui.Location = new System.Drawing.Point(307, 398);
+            this.button_Gui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button_Gui.Name = "button_Gui";
-            this.button_Gui.Size = new System.Drawing.Size(99, 42);
+            this.button_Gui.Size = new System.Drawing.Size(74, 34);
             this.button_Gui.TabIndex = 3;
             this.button_Gui.Text = "Gửi";
             this.button_Gui.UseVisualStyleBackColor = true;
@@ -94,54 +94,58 @@
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.richTextBox1.Location = new System.Drawing.Point(45, 208);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richTextBox1.Location = new System.Drawing.Point(34, 169);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(361, 166);
+            this.richTextBox1.Size = new System.Drawing.Size(362, 196);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label2.Location = new System.Drawing.Point(43, 38);
+            this.label2.Location = new System.Drawing.Point(32, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 17);
+            this.label2.Size = new System.Drawing.Size(64, 15);
             this.label2.TabIndex = 6;
             this.label2.Text = "Người gửi";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label3.Location = new System.Drawing.Point(43, 81);
+            this.label3.Location = new System.Drawing.Point(32, 66);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 17);
+            this.label3.Size = new System.Drawing.Size(72, 15);
             this.label3.TabIndex = 7;
             this.label3.Text = "Người nhận";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label4.Location = new System.Drawing.Point(43, 126);
+            this.label4.Location = new System.Drawing.Point(32, 102);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 17);
+            this.label4.Size = new System.Drawing.Size(47, 15);
             this.label4.TabIndex = 8;
             this.label4.Text = "Tiêu đề";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label1.Location = new System.Drawing.Point(43, 174);
+            this.label1.Location = new System.Drawing.Point(32, 141);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 16);
+            this.label1.Size = new System.Drawing.Size(86, 15);
             this.label1.TabIndex = 9;
             this.label1.Text = "Tên người gửi";
             // 
@@ -149,11 +153,11 @@
             // 
             this.textBox_Name.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_Name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.textBox_Name.Location = new System.Drawing.Point(139, 160);
-            this.textBox_Name.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_Name.Location = new System.Drawing.Point(122, 129);
+            this.textBox_Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox_Name.Multiline = true;
             this.textBox_Name.Name = "textBox_Name";
-            this.textBox_Name.Size = new System.Drawing.Size(268, 42);
+            this.textBox_Name.Size = new System.Drawing.Size(274, 35);
             this.textBox_Name.TabIndex = 10;
             // 
             // label5
@@ -161,9 +165,10 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label5.Location = new System.Drawing.Point(43, 393);
+            this.label5.Location = new System.Drawing.Point(39, 367);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(86, 16);
+            this.label5.Size = new System.Drawing.Size(72, 14);
             this.label5.TabIndex = 12;
             this.label5.Text = "Tệp đính kèm";
             // 
@@ -172,20 +177,21 @@
             this.label_att.AutoSize = true;
             this.label_att.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_att.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.label_att.Location = new System.Drawing.Point(136, 393);
+            this.label_att.Location = new System.Drawing.Point(109, 367);
+            this.label_att.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_att.Name = "label_att";
-            this.label_att.Size = new System.Drawing.Size(122, 16);
+            this.label_att.Size = new System.Drawing.Size(101, 14);
             this.label_att.TabIndex = 13;
             this.label_att.Text = "(*Tên tệp đính kèm)";
             // 
             // button_tep
             // 
-            this.button_tep.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_tep.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_tep.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
-            this.button_tep.Location = new System.Drawing.Point(45, 431);
-            this.button_tep.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_tep.Location = new System.Drawing.Point(41, 398);
+            this.button_tep.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button_tep.Name = "button_tep";
-            this.button_tep.Size = new System.Drawing.Size(93, 42);
+            this.button_tep.Size = new System.Drawing.Size(70, 34);
             this.button_tep.TabIndex = 14;
             this.button_tep.Text = "Chọn tệp";
             this.button_tep.UseVisualStyleBackColor = true;
@@ -193,10 +199,10 @@
             // 
             // SendMailSMTP
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(214)))), ((int)(((byte)(185)))));
-            this.ClientSize = new System.Drawing.Size(441, 485);
+            this.ClientSize = new System.Drawing.Size(432, 441);
             this.Controls.Add(this.button_tep);
             this.Controls.Add(this.label_att);
             this.Controls.Add(this.label5);
@@ -211,7 +217,7 @@
             this.Controls.Add(this.textBox_EmailTo);
             this.Controls.Add(this.textBox_emailFrom);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SendMailSMTP";
             this.Text = "SendMailSMTP";
             this.Load += new System.EventHandler(this.SendMailSMTP_Load);

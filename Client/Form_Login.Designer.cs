@@ -40,6 +40,7 @@
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(62)))), ((int)(((byte)(53)))));
             this.button1.Location = new System.Drawing.Point(25, 224);
             this.button1.Name = "button1";
@@ -57,7 +58,7 @@
             this.textBox_tk.Name = "textBox_tk";
             this.textBox_tk.Size = new System.Drawing.Size(228, 28);
             this.textBox_tk.TabIndex = 1;
-            this.textBox_tk.Text = "taikhoan1";
+            this.textBox_tk.Text = "user1";
             // 
             // textBox_mk
             // 
@@ -105,6 +106,7 @@
             // 
             // button2
             // 
+            this.button2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(181, 224);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(72, 35);
@@ -116,9 +118,10 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.Location = new System.Drawing.Point(168, 197);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(85, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(83, 14);
             this.linkLabel1.TabIndex = 7;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Tạo tài khoản??";
