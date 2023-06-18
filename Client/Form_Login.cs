@@ -65,7 +65,7 @@ namespace Client
         private bool ConnectToServer(string username, string password)
         {
             clientServer = new UdpClient();
-            endPoint = new IPEndPoint(IPAddress.Parse("192.168.1.11"), 8088);
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8088);
             try
             {
                 clientServer.Connect(endPoint);
